@@ -3,10 +3,10 @@ var view = {
   displayMessage: function (msg) {
     //код буде приведений пізніше
   },
-  userMiss: function (location) {
+  displayHit: function (location) {
     //код буде приведений пізніше
   },
-  userHit: function (location) {
+  displayMiss: function (location) {
     //код буде приведений пізніше
   },
 };
