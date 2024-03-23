@@ -1,12 +1,15 @@
 //Oголошуємо методи, які стосуються об'єкту подання - declare methods related to the view object
 var view = {
   displayMessage: function (msg) {
-    //код буде приведений пізніше
+    var messageArea = document.getElementById("messageArea");
+    messageArea.innerHTML = msg;
   },
   displayHit: function (location) {
-    //код буде приведений пізніше
+    var cell = document.getElementById(location);
+    cell.setAttribute("class", "hit");
   },
   displayMiss: function (location) {
-    //код буде приведений пізніше
+    var cell = document.getElementById(location);
+    cell.setAttribute("class", "miss");
   },
 };
