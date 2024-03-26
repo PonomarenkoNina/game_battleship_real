@@ -40,6 +40,13 @@ var model1 = {
     { locations: ["24", "34", "44"], hits: ["", "", ""] }, //Другий корабль C4,D4,E4
     { locations: ["10", "11", "12"], hits: ["", "", ""] }, //Третій корабль B0,B1,B2
   ],
+  fire: function (guess) {
+    //Метод отримує координати пострілу, потім перебираємо масив ships, перевіряючи кожний корабль
+    for (var i = 0; i < this.numShips; i++) {
+      var ship = this.ship[i];
+      location = ship.locations;
+    }
+  },
 };
 
 view.displayHit("06"); //А6
