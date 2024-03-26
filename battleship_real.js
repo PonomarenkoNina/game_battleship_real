@@ -29,11 +29,19 @@ var ships = [
   { locations: ["63", "64", "65"], hits: ["", "", "hit"] }, //Третій корабль G3,G4,G5
 ];
 //Exersise координати пострілів: A6, B3, C4, D1, B0, D4, F0, A1, C6, B1, B2, E4, B6
-var ships = [
-  { locations: ["06", "16", "26"], hits: ["hit", "hit", "hit"] }, //Перший корабль A6,B6,C6
-  { locations: ["24", "34", "44"], hits: ["hit", "hit", "hit"] }, //Другий корабль C4,D4,E4
-  { locations: ["10", "11", "12"], hits: ["hit", "hit", "hit"] }, //Третій корабль B0,B1,B2
-];
+var model1 = {
+  boardSize: 7,
+  numShips: 3,
+  shipLength: 3,
+  shipSunk: 0,
+
+  ships: [
+    { locations: ["06", "16", "26"], hits: ["", "", ""] }, //Перший корабль A6,B6,C6
+    { locations: ["24", "34", "44"], hits: ["", "", ""] }, //Другий корабль C4,D4,E4
+    { locations: ["10", "11", "12"], hits: ["", "", ""] }, //Третій корабль B0,B1,B2
+  ],
+};
+
 view.displayHit("06"); //А6
 view.displayMiss("13"); //B3
 view.displayHit("24"); //C4

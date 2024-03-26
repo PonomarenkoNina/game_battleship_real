@@ -49,7 +49,7 @@ console.log("Location is " + locations[1]);
 //Допишите следующий код, чтобы он определял, было ли попадание в первой клетке третьего корабля:
 var ship3 = ships[2];
 var hits = ship3.hits;
-if (hits === "hit") {
+if (hits[0] === "hit") {
   console.log("Ouch, hit on third ship at location one");
 }
 //Допишите следующий код, чтобы он записывал попадание в третью клетку первого корабля:
