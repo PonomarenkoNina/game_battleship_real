@@ -32,8 +32,8 @@ var ships = [
 var model1 = {
   boardSize: 7,
   numShips: 3,
-  shipLength: 3,
   shipSunk: 0,
+  shipLength: 3,
 
   ships: [
     { locations: ["06", "16", "26"], hits: ["", "", ""] }, //Перший корабль A6,B6,C6
@@ -45,9 +45,18 @@ var model1 = {
     for (var i = 0; i < this.numShips; i++) {
       var ship = this.ship[i];
       location = ship.locations;
+      //Метод indexOf шукає вказане значення і повертає його індекс (-1 або значення відсутнє)
+      var index = locations.indexOf(guess);
+      if (index >= 0) {
+        ship.hits[index] = "hit";
+        return true;
+      }
     }
+    return false;
   },
 };
+guess = "16";
+locations = ["06", "16", "26"];
 
 view.displayHit("06"); //А6
 view.displayMiss("13"); //B3
