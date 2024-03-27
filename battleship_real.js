@@ -17,33 +17,17 @@ var view = {
 
 view.displayMessage("Tap, tap, is this thing on?");
 
-//Об'єкт моделі(зберігаємо поточний стан гри - позиції кораблів, влучання і лічильник потоплених кораблів)
-//Кожний корабль уявляємо об'єктом, який зберігає координати зайнятих клітин і кількість влучань
-var ship1 = { locations: ["10", "20", "30"], hits: ["", "", ""] };
-var ship2 = { locations: ["32", "33", "34"], hits: ["", "", ""] };
-var ship3 = { locations: ["63", "64", "65"], hits: ["", "", "hit"] };
-//Створюємо масив для зберігання всіх даних
-var ships = [
-  { locations: ["10", "20", "30"], hits: ["", "", ""] }, //Перший корабль В0,С0,D0
-  { locations: ["32", "33", "34"], hits: ["", "", ""] }, //Другий корабль D2,D3,D4
-  { locations: ["63", "64", "65"], hits: ["", "", "hit"] }, //Третій корабль G3,G4,G5
-];
-//Exersise координати пострілів: A6, B3, C4, D1, B0, D4, F0, A1, C6, B1, B2, E4, B6
 view.displayHit("06"); //А6
-view.displayMiss("13"); //B3
 view.displayHit("24"); //C4
-view.displayMiss("31"); //D1
 view.displayHit("10"); //B0
 view.displayHit("34"); //D4
-view.displayMiss("50"); //F0
-view.displayMiss("01"); //A1
 view.displayHit("26"); //C6
 view.displayHit("11"); //B1
 view.displayHit("12"); //B2
 view.displayHit("44"); //E4
 view.displayHit("16"); //B6
 
-var model1 = {
+var model = {
   boardSize: 7,
   numShips: 3,
   shipSunk: 0,
@@ -59,10 +43,12 @@ var model1 = {
     for (var i = 0; i < this.numShips; i++) {
       var ship = this.ships[i];
       var index = ship.locations.indexOf(guess);
+
       if (index >= 0) {
         ship.hits[index] = "hit";
         view.displayHit(guess); //Повідомляємо подання, що в клітинці guess треба вивести маркер попадання
         view.displayMessage("HIT"); //Наказуємо поданні вивести повідомлення "HIT"
+
         if (this.isSunk(ship)) {
           view.displayMessage("You sank my battleship!"); //Повідомляємо ігроку, що він потопив корабль
           this.shipSunk++;
@@ -70,7 +56,7 @@ var model1 = {
         return true;
       }
     }
-    view.displayMiss("guess"); //Повідомляємо подання, що в клітинці guess треба вивести маркер промаху
+    view.displayMiss(guess); //Повідомляємо подання, що в клітинці guess треба вивести маркер промаху
     view.displayMessage("You missed."); //Наказуємо поданні вивести повідомлення промаху
     return false;
   },
@@ -84,5 +70,14 @@ var model1 = {
     return true;
   },
 };
-guess = "16";
-locations = ["06", "16", "26"];
+
+model.fire("53");
+model.fire("06");
+model.fire("16");
+model.fire("26");
+model.fire("34");
+model.fire("24");
+model.fire("44");
+model.fire("12");
+model.fire("11");
+model.fire("10");
