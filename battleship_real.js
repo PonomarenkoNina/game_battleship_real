@@ -44,9 +44,8 @@ var model1 = {
     //Метод отримує координати пострілу, потім перебираємо масив ships, перевіряючи кожний корабль
     for (var i = 0; i < this.numShips; i++) {
       var ship = this.ship[i];
-      location = ship.locations;
       //Метод indexOf шукає вказане значення і повертає його індекс (-1 або значення відсутнє)
-      var index = locations.indexOf(guess);
+      var index = ship.locations.indexOf(guess);
       if (index >= 0) {
         ship.hits[index] = "hit";
         return true;
