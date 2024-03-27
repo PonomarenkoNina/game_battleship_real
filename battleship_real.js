@@ -29,34 +29,6 @@ var ships = [
   { locations: ["63", "64", "65"], hits: ["", "", "hit"] }, //Третій корабль G3,G4,G5
 ];
 //Exersise координати пострілів: A6, B3, C4, D1, B0, D4, F0, A1, C6, B1, B2, E4, B6
-var model1 = {
-  boardSize: 7,
-  numShips: 3,
-  shipSunk: 0,
-  shipLength: 3,
-
-  ships: [
-    { locations: ["06", "16", "26"], hits: ["", "", ""] }, //Перший корабль A6,B6,C6
-    { locations: ["24", "34", "44"], hits: ["", "", ""] }, //Другий корабль C4,D4,E4
-    { locations: ["10", "11", "12"], hits: ["", "", ""] }, //Третій корабль B0,B1,B2
-  ],
-  fire: function (guess) {
-    //Метод отримує координати пострілу, потім перебираємо масив ships, перевіряючи кожний корабль
-    for (var i = 0; i < this.numShips; i++) {
-      var ship = this.ship[i];
-      //Метод indexOf шукає вказане значення і повертає його індекс (-1 або значення відсутнє)
-      var index = ship.locations.indexOf(guess);
-      if (index >= 0) {
-        ship.hits[index] = "hit";
-        return true;
-      }
-    }
-    return false;
-  },
-};
-guess = "16";
-locations = ["06", "16", "26"];
-
 view.displayHit("06"); //А6
 view.displayMiss("13"); //B3
 view.displayHit("24"); //C4
@@ -70,3 +42,47 @@ view.displayHit("11"); //B1
 view.displayHit("12"); //B2
 view.displayHit("44"); //E4
 view.displayHit("16"); //B6
+
+var model1 = {
+  boardSize: 7,
+  numShips: 3,
+  shipSunk: 0,
+  shipLength: 3,
+  ships: [
+    { locations: ["06", "16", "26"], hits: ["", "", ""] }, //Перший корабль A6,B6,C6
+    { locations: ["24", "34", "44"], hits: ["", "", ""] }, //Другий корабль C4,D4,E4
+    { locations: ["10", "11", "12"], hits: ["", "", ""] }, //Третій корабль B0,B1,B2
+  ],
+  //Метод отримує координати пострілу, потім перебираємо масив ships, перевіряючи кожний корабль
+  //Метод indexOf шукає вказане значення і повертає його індекс (-1 або значення відсутнє)
+  fire: function (guess) {
+    for (var i = 0; i < this.numShips; i++) {
+      var ship = this.ships[i];
+      var index = ship.locations.indexOf(guess);
+      if (index >= 0) {
+        ship.hits[index] = "hit";
+        view.displayHit(guess); //Повідомляємо подання, що в клітинці guess треба вивести маркер попадання
+        view.displayMessage("HIT"); //Наказуємо поданні вивести повідомлення "HIT"
+        if (this.isSunk(ship)) {
+          view.displayMessage("You sank my battleship!"); //Повідомляємо ігроку, що він потопив корабль
+          this.shipSunk++;
+        }
+        return true;
+      }
+    }
+    view.displayMiss("guess"); //Повідомляємо подання, що в клітинці guess треба вивести маркер промаху
+    view.displayMessage("You missed."); //Наказуємо поданні вивести повідомлення промаху
+    return false;
+  },
+  //Додамо допоміжний метод для перевірки умови, яка перевіряє, чи потоплено корабель
+  isSunk: function (ship) {
+    for (var i = 0; i < this.shipLength; i++) {
+      if (ship.hits[i] !== "hit") {
+        return false;
+      }
+    }
+    return true;
+  },
+};
+guess = "16";
+locations = ["06", "16", "26"];
