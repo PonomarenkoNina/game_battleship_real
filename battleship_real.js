@@ -17,15 +17,15 @@ var view = {
 
 view.displayMessage("Tap, tap, is this thing on?");
 
-view.displayHit("06"); //А6
-view.displayHit("24"); //C4
-view.displayHit("10"); //B0
-view.displayHit("34"); //D4
-view.displayHit("26"); //C6
-view.displayHit("11"); //B1
-view.displayHit("12"); //B2
-view.displayHit("44"); //E4
-view.displayHit("16"); //B6
+//view.displayHit("06"); //А6
+//view.displayHit("24"); //C4
+//view.displayHit("10"); //B0
+//view.displayHit("34"); //D4
+//view.displayHit("26"); //C6
+//view.displayHit("11"); //B1
+//view.displayHit("12"); //B2
+//view.displayHit("44"); //E4
+//view.displayHit("16"); //B6
 
 var model = {
   boardSize: 7,
@@ -99,16 +99,17 @@ var controller = {
     }
   },
 };
-controller.processGuess("A0");
-controller.processGuess("A6");
-controller.processGuess("B6");
-controller.processGuess("C6");
-controller.processGuess("C4");
-controller.processGuess("D4");
-controller.processGuess("E4");
-controller.processGuess("B0");
-controller.processGuess("B1");
-controller.processGuess("B2");
+//controller.processGuess("A0");
+//controller.processGuess("A6");
+//controller.processGuess("B6");
+//controller.processGuess("C6");
+//controller.processGuess("C4");
+//controller.processGuess("D4");
+//controller.processGuess("E4");
+//controller.processGuess("B0");
+//controller.processGuess("B1");
+//controller.processGuess("B2");
+
 function parseGuess(guess) {
   //Отримуємо дані від ігрока і перевіряємо їх на дійсність та впевнюємось, що в строчці 2 символи
   var alphabet = ["A", "B", "C", "D", "E", "F", "G"];
@@ -142,3 +143,29 @@ console.log(parseGuess("G3"));
 console.log(parseGuess("H0"));
 console.log(parseGuess("A7"));
 //Console JS: 00  16  63  null  null
+
+//Введення та отримання координат пострілів
+//Функція буде викликатись при кожному нажиманні кнопки Fire!
+function handleFireButton() {
+  var guessInput = document.getElementById("guessInput");
+  var guess = guessInput.value; //Координати зберігаються у властивості value елемента input
+  controller.processGuess(guess); //Координати постилу передаються контролеру
+  guessInput.value = ""; //Видаляє вміст елемента input, замінюючи її порожньою строкою
+}
+//Отримуємо посилання по ідентифікатору кнопки, якій назначаємо обробник подій нажимання кнопки Fire!
+function init() {
+  var fireButton = document.getElementById("fireButton");
+  fireButton.onclick = handleFireButton;
+  var guessInput = document.getElementById("guessInput");
+  guessInput.onkeypress = handleKeyPress;
+}
+
+window.onload = init;
+
+function handleKeyPress(e) {
+  var fireButton = document.getElementById("fireButton");
+  if (e.keyCode === 13) {
+    fireButton.click();
+    return false;
+  }
+}
