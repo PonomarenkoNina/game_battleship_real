@@ -5,10 +5,12 @@ var view = {
     var messageArea = document.getElementById("messageArea");
     messageArea.innerHTML = msg;
   },
+
   displayHit: function (location) {
     var cell = document.getElementById(location);
     cell.setAttribute("class", "hit");
   },
+
   displayMiss: function (location) {
     var cell = document.getElementById(location);
     cell.setAttribute("class", "miss");
@@ -33,9 +35,9 @@ var model = {
   shipSunk: 0,
   shipLength: 3,
   ships: [
-    { locations: ["06", "16", "26"], hits: ["", "", ""] }, //Перший корабль A6,B6,C6
-    { locations: ["24", "34", "44"], hits: ["", "", ""] }, //Другий корабль C4,D4,E4
-    { locations: ["10", "11", "12"], hits: ["", "", ""] }, //Третій корабль B0,B1,B2
+    { locations: [0, 0, 0], hits: ["", "", ""] },
+    { locations: [0, 0, 0], hits: ["", "", ""] },
+    { locations: [0, 0, 0], hits: ["", "", ""] },
   ],
   //Метод отримує координати пострілу, потім перебираємо масив ships, перевіряючи кожний корабль
   //Метод indexOf шукає вказане значення і повертає його індекс (-1 або значення відсутнє)
@@ -78,18 +80,24 @@ var model = {
       } while (this.collision(locations));
       this.ships[i].locations = locations;
     }
+    console.log("Ships array: ");
+    console.log(this.ships);
   },
+
   generateShip: function () {
     var direction = Math.floor(Math.random() * 2);
     var row, col;
 
     if (direction === 1) {
+      //horizontal
       row = Math.floor(Math.random() * this.boardSize);
-      col = Math.floor(Math.random() * (this.boardSize - this.shipLength));
+      col = Math.floor(Math.random() * (this.boardSize - this.shipLength + 1));
     } else {
-      row = Math.floor(Math.random() * (this.boardSize - this.shipLength));
+      // vertical
+      row = Math.floor(Math.random() * (this.boardSize - this.shipLength + 1));
       col = Math.floor(Math.random() * this.boardSize);
     }
+
     var newShipLocations = [];
     for (var i = 0; i < this.shipLength; i++) {
       if (direction === 1) {
@@ -100,9 +108,10 @@ var model = {
     }
     return newShipLocations;
   },
+
   collision: function (locations) {
     for (var i = 0; i < this.numShips; i++) {
-      var ship = model.ships[i];
+      var ship = this.ships[i];
       for (var j = 0; j < locations.length; j++) {
         if (ship.locations.indexOf(locations[j]) >= 0) {
           return true;
@@ -113,16 +122,16 @@ var model = {
   },
 };
 
-//model.fire("53");
-//model.fire("06");
-//model.fire("16");
-//model.fire("26");
-//model.fire("34");
-//model.fire("24");
-//model.fire("44");
-//model.fire("12");
-//model.fire("11");
-//model.fire("10");
+//model.fire("53"); miss
+//model.fire("06"); hit
+//model.fire("16"); hit
+//model.fire("26"); hit
+//model.fire("34"); hit
+//model.fire("24"); hit
+//model.fire("44"); hit
+//model.fire("12"); hit
+//model.fire("11"); hit
+//model.fire("10"); hit
 
 //Визначаємо об'єкт контролера з властивістю guesses (кількість пострілів) та processGuess обробку координат пострілу і передачу їх моделі та перевіряємо завершення гри.
 //Планування коду: напишемо допоміжну функцію parseGuess, пишемо псевдокод + блоксхему
@@ -160,7 +169,7 @@ function parseGuess(guess) {
     alert("Opps,please enter a letter and a numder on the board.");
   } else {
     firstChar = guess.charAt(0); //Вилучається перший символ строки
-    var row = alphabet.indexOf(firstChar); //Отримуємо цифру від 0 до 6
+    var row = alphabet.indexOf(guess.charAt(0)); //Отримуємо цифру від 0 до 6
     var column = guess.charAt(1); //Отримання другого символа
 
     if (isNaN(row) || isNaN(column)) {
@@ -200,6 +209,7 @@ function init() {
   fireButton.onclick = handleFireButton;
   var guessInput = document.getElementById("guessInput"); //код для обробки натискання кнопки Enter
   guessInput.onkeypress = handleKeyPress;
+  model.generateShipLocations();
 }
 
 window.onload = init;
